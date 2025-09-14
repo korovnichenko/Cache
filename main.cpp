@@ -26,7 +26,7 @@ template <typename F>
 bool cache_t<T, KeyT>::lookup_update(KeyT key, F slow_get_page) {
     auto hit = hash_.find(key);
     if (hit == hash_.end()) {
-        std::cout<<"no hit\n";
+        std::cout<<" - no hit | ";
         if (full()) {
             hash_.erase(cache_.back());
             cache_.pop_back();
@@ -35,7 +35,7 @@ bool cache_t<T, KeyT>::lookup_update(KeyT key, F slow_get_page) {
         hash_[key] = cache_.begin();
         return false;
     }
-    std::cout<<"hit\n";
+    std::cout<<" - hit | ";
     auto eltit = hit->second;
 
     if (eltit != cache_.begin())
@@ -43,7 +43,10 @@ bool cache_t<T, KeyT>::lookup_update(KeyT key, F slow_get_page) {
     return true;
 }
 int main() {
-    cache_t<int, int> cache(4);
+    int Size;
+    std::cout<<"Choose size of cache: ";
+    std::cin>>Size;
+    cache_t<int, int> cache(Size);
     int data[] = {1, 2, 3, 4, 1, 2, 5, 1, 2, 4, 3, 4};
     for(int number: data){
         std::cout<<number;
