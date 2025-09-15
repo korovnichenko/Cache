@@ -6,13 +6,15 @@ LDFLAGS = -g3 -fsanitize=address -fsanitize=undefined -fno-sanitize-recover=all 
 TARGET = a.out
 SRC_DIR = src
 SRC = $(wildcard $(SRC_DIR)/*.cpp)
+HDR_DIR = headers
 OBJS = $(patsubst %.cpp, %.o, $(SRC))
+
 
 
 $(TARGET): $(OBJS)
 	$(CC) $(LDFLAGS) $^ -o $@
 
-%.o: %.cpp
+%.o: %.cpp $(HDR_DIR)/*.hpp
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
